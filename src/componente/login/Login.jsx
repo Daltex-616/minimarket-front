@@ -15,7 +15,7 @@ const Login = () =>{
                             <p className="text-center lead">De la Puente a tu carrito</p>
                             <form>
                                 <label className="font-500">DNI</label>   
-                                <input name="" className="form-control form-control-lg mb-3" type="email"/>
+                                <input name="" className="form-control form-control-lg mb-3" type="text"/>
                                 <label class="font-500">Contraseña</label>
                                 <input name="" className="form-control form-control-lg" type="password"></input>
                                 <button class="btn btn-primary btn-lg w-100 shadow-lg">ENTRAR</button>
