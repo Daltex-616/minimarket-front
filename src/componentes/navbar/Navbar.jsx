@@ -40,7 +40,7 @@ const Navbar = (parametros) => {
 
   return (
     <>
-      <nav className="navbar navbar-expand-lg navbar-dark bg-dark box-shadow">
+      <nav id="inicio" className="navbar navbar-expand-lg navbar-dark bg-dark box-shadow">
         <div className="container-fluid">
 
         
