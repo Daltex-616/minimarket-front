@@ -1,0 +1,45 @@
+.info{
+    margin-top:15%;
+    transform: translateY(-15%);
+}
+.info h1,h2{
+    font-size: 2.5em;
+    font-weight: 7000;
+    color: #fff;
+    letter-spacing: 2px;
+}
+
+.info p{
+    font-size: 2.5em;
+    font-weight: 7000;
+    color: #fff;
+    letter-spacing: 2px;
+    padding-bottom: 120px;
+}
+
+section{
+    padding-top: 100px;
+    padding-bottom: 120px;
+}
+
+.card-effect{
+    box-shadow: var(--box-shadow);
+    background-color: #fff;
+    padding: 20px;
+    margin: 20px;
+    transition: all 0.35s ease;
+    border-radius: 10px;
+}
+.card-effect:hover{
+    box-shadow: none;
+    transform: translateY(5px);
+}
+.boton-notcias{
+    text-decoration: none;
+    margin-left: 45%;
+    margin-right: 46%;
+}
+.img-inicio{
+    max-width: 150px;
+    margin-left: 43%;
+}

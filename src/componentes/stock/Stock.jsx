@@ -1,7 +1,6 @@
 import { TablaProductos } from "./tabla/TablaProductos";
 
 const Stock = (parametros) => {
-
   if (parametros.stock === false) {
     return <></>;
   }
@@ -15,14 +14,18 @@ const Stock = (parametros) => {
             </div>
             <div className="col align-self-center"></div>
             <div className="col align-self-end text-end">
-              <button type="button" className="btn btn-success m-4" title="Agregar">
+              <button
+                type="button"
+                className="btn btn-success m-4"
+                title="Agregar"
+              >
                 <i className="bi bi-plus-lg"></i>
               </button>
             </div>
           </div>
         </div>
 
-        <TablaProductos credencial={parametros.credencial}/>
+        <TablaProductos credencial={parametros.credencial} />
       </div>
     </>
   );

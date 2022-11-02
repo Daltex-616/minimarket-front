@@ -9,39 +9,44 @@ const Navbar = (parametros) => {
   const roles = parametros.credencial.roles;
 
   const caja = async () => {
-    const permisos = roles.find(rol => rol.rolId === 2 || rol.rolId === 1)
-    if(permisos){
+    const permisos = roles.find((rol) => rol.rolId === 2 || rol.rolId === 1);
+    if (permisos) {
       parametros.setHome(false);
       parametros.setCaja(true);
       parametros.setStock(false);
       parametros.setBloqueado(false);
       return;
     }
-      parametros.setHome(false);
-      parametros.setCaja(false);
-      parametros.setStock(false);
-      parametros.setBloqueado(true);
+    parametros.setHome(false);
+    parametros.setCaja(false);
+    parametros.setStock(false);
+    parametros.setBloqueado(true);
   };
 
   const stock = async () => {
-    const permisos = roles.find(rol => rol.rolId === 3 || rol.rolId === 1)
-    if(permisos){
+    const permisos = roles.find((rol) => rol.rolId === 3 || rol.rolId === 1);
+    if (permisos) {
       parametros.setHome(false);
       parametros.setCaja(false);
       parametros.setStock(true);
       parametros.setBloqueado(false);
       return;
     }
-      parametros.setHome(false);
-      parametros.setCaja(false);
-      parametros.setStock(false);
-      parametros.setBloqueado(true);
+    parametros.setHome(false);
+    parametros.setCaja(false);
+    parametros.setStock(false);
+    parametros.setBloqueado(true);
   };
 
   return (
     <>
-      <nav className="navbar navbar-expand-lg navbar-dark bg-dark box-shadow">
+      <nav
+        id="inicio"
+        className="navbar navbar-expand-lg navbar-dark bg-dark box-shadow"
+      >
         <div className="container-fluid">
+          <img alt="minimarket" src="./logo.png" width={"55px"}></img>
+
           <button
             className="btn btn-outline-primary m-1"
             onClick={() => inicio()}
