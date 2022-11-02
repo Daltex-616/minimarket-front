@@ -15,8 +15,8 @@ const Stock = (parametros) => {
             </div>
             <div className="col align-self-center"></div>
             <div className="col align-self-end text-end">
-              <button type="button" className="btn btn-success m-4">
-                <i className="bi bi-plus"></i>
+              <button type="button" className="btn btn-success m-4" title="Agregar">
+                <i className="bi bi-plus-lg"></i>
               </button>
             </div>
           </div>
