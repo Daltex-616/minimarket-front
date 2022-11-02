@@ -28,6 +28,7 @@ section{
     padding: 20px;
     margin: 20px;
     transition: all 0.35s ease;
+    border-radius: 10px;
 }
 .card-effect:hover{
     box-shadow: none;

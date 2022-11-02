@@ -52,8 +52,8 @@ const Home = (parametros) => {
                   <p>el dia de mañana se trabaja doble turno y no habra doble pago </p>
               </div>
             </div>
-            <div className="col-lg-4 col-sm-6">
-                <div className="service card-effect">
+            <div className="col-lg-4 col-sm-6 ">
+                <div className="service card-effect ">
                   <h5 className="mt-4 mb-2">Focos perdidos</h5>
                   <p>nos robaron mas de 2 focos  </p>
               </div>
