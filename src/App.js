@@ -20,7 +20,7 @@ function App() {
         <Navbar credencial={credencial} setCredencial={setCredencial} home={home} setHome={setHome} setCaja={setCaja} setStock={setStock} stock={stock} caja={caja} setBloqueado={setBloqueado} bloqueado={bloqueado}/>
         <Home home={home}/>
         <Caja caja={caja}/>
-        <Stock stock={stock}/>
+        <Stock stock={stock} credencial={credencial}/>
         <Bloqueado bloqueado={bloqueado}/>
       </>
     );
