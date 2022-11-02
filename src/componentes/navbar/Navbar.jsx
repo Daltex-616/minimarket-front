@@ -4,6 +4,7 @@ const Navbar = (parametros) => {
     parametros.setCaja(false);
     parametros.setStock(false);
     parametros.setBloqueado(false);
+    parametros.setFormAgregarProducto(false);
   };
 
   const roles = parametros.credencial.roles;
@@ -15,12 +16,14 @@ const Navbar = (parametros) => {
       parametros.setCaja(true);
       parametros.setStock(false);
       parametros.setBloqueado(false);
+      parametros.setFormAgregarProducto(false);
       return;
     }
     parametros.setHome(false);
     parametros.setCaja(false);
     parametros.setStock(false);
     parametros.setBloqueado(true);
+    parametros.setFormAgregarProducto(false);
   };
 
   const stock = async () => {
@@ -30,12 +33,14 @@ const Navbar = (parametros) => {
       parametros.setCaja(false);
       parametros.setStock(true);
       parametros.setBloqueado(false);
+      parametros.setFormAgregarProducto(false);
       return;
     }
     parametros.setHome(false);
     parametros.setCaja(false);
     parametros.setStock(false);
     parametros.setBloqueado(true);
+    parametros.setFormAgregarProducto(false);
   };
 
   return (

@@ -32,7 +32,7 @@ export const TablaProductos = (parametros) => {
           {productos.map((producto) => {
             return (
 
-                <tr className={producto.total < 10 ? "table-warning" : "table-success"}>
+                <tr key={producto.codigo_barra} className={producto.total === 0 ? "table-danger" : producto.total < 10 ? "table-warning" : "table-success" }>
                   <td>{producto.nombre}</td>
                   <td>{producto.codigo_barra}</td>
                   <td>{producto.precio_compra}</td>
@@ -60,6 +60,7 @@ export const TablaProductos = (parametros) => {
           })}
         </tbody>
       </table>
+      <br />
     </>
   );
 };
