@@ -1,12 +1,11 @@
 import { useState } from "react";
 import React from "react";
-import { apiGet, apiDelete, apiPut, apiPost } from "../../../utils/api.js";
+import { apiDelete, apiPut, apiPost } from "../../../utils/api.js";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import Form from "react-bootstrap/Form";
 
 export const TablaProductos = (parametros) => {
-  const [productos, setProductos] = useState([]);
   const [showModalEliminar, setShowModalEliminar] = useState(false);
   const [showModalGuardar, setShowModalGuardar] = useState(false);
   const [showModalIngresar, setShowModalIngresar] = useState(false);
@@ -16,14 +15,6 @@ export const TablaProductos = (parametros) => {
   const [precioVenta, setPrecioVenta] = useState(0);
   const [precioCompra, setPrecioCompra] = useState(0);
   const [destino, setDestino] = useState(0);
-
-  React.useEffect(() => {
-    const productos = async () => {
-      const resultados = await apiGet("productos", parametros.credencial.token);
-      setProductos(resultados.data);
-    };
-    productos();
-  }, [parametros.credencial.token]);
 
   const cerrarModalEliminar = () => setShowModalEliminar(false);
   const cerrarModalGuardar = () => setShowModalGuardar(false);
@@ -68,7 +59,7 @@ export const TablaProductos = (parametros) => {
       cantidad: +cantidad,
     };
     await apiPut("stock", data);
-    const productos2 = productos.map((p) => {
+    const productos2 = parametros.productos.map((p) => {
       if (p.codigo_barra === codigoBarra) {
         if(destino === 2 && p.deposito < cantidad){
           return p;
@@ -90,7 +81,7 @@ export const TablaProductos = (parametros) => {
       }
       return p;
     });
-    setProductos(productos2);
+    parametros.setProductos(productos2);
     setNombre("");
     setCodigoBarra("");
     setPrecioVenta("");
@@ -103,10 +94,10 @@ export const TablaProductos = (parametros) => {
       codigo_barra: codigo_barra,
     };
     await apiDelete("productos", data);
-    const productos2 = productos.filter(
+    const productos2 = parametros.productos.filter(
       (producto) => producto.codigo_barra !== codigo_barra
     );
-    setProductos(productos2);
+    parametros.setProductos(productos2);
     setNombre("");
     setCodigoBarra("");
     setShowModalEliminar(false);
@@ -128,7 +119,7 @@ export const TablaProductos = (parametros) => {
       precio_venta: precioVenta,
     };
     await apiPut("productos", data);
-    const productos2 = productos.map((p) => {
+    const productos2 = parametros.productos.map((p) => {
       if (p.codigo_barra === codigoBarra) {
         return {
           nombre: nombre,
@@ -142,7 +133,7 @@ export const TablaProductos = (parametros) => {
       }
       return p;
     });
-    setProductos(productos2);
+    parametros.setProductos(productos2);
     setNombre("");
     setCodigoBarra("");
     setPrecioVenta("");
@@ -156,7 +147,7 @@ export const TablaProductos = (parametros) => {
       cantidad: +cantidad,
     };
     await apiPost("stock", data);
-    const productos2 = productos.map((p) => {
+    const productos2 = parametros.productos.map((p) => {
       if (p.codigo_barra === codigoBarra) {
         return {
           nombre: p.nombre,
@@ -170,7 +161,7 @@ export const TablaProductos = (parametros) => {
       }
       return p;
     });
-    setProductos(productos2);
+    parametros.setProductos(productos2);
     setNombre("");
     setCodigoBarra("");
     setPrecioVenta("");
@@ -194,7 +185,7 @@ export const TablaProductos = (parametros) => {
           </tr>
         </thead>
         <tbody>
-          {productos.map((producto) => {
+          {parametros.productos.map((producto) => {
             return (
               <tr
                 key={producto.codigo_barra}
@@ -220,7 +211,7 @@ export const TablaProductos = (parametros) => {
                     className="btn btn-light m-1"
                     title="Mover al salon"
                   >
-                    <i class="bi bi-box-arrow-left"></i>
+                    <i className="bi bi-box-arrow-left"></i>
                   </button>
                   <button
                     onClick={() => mostrarModalMover(producto, 1)}
@@ -228,7 +219,7 @@ export const TablaProductos = (parametros) => {
                     className="btn btn-light m-1"
                     title="Mover al deposito"
                   >
-                    <i class="bi bi-box-arrow-right"></i>
+                    <i className="bi bi-box-arrow-right"></i>
                   </button>
                   <button
                     onClick={() => mostrarModalIngresar(producto)}
