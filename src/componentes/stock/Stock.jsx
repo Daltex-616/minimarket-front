@@ -1,39 +1,59 @@
 import { TablaProductos } from "./tabla/TablaProductos";
-import { FormAgregarProducto } from "./FormAgregarProducto";
+import { useState } from "react";
+import React from "react";
+import Button from "react-bootstrap/Button";
+import Modal from "react-bootstrap/Modal";
+import Form from "react-bootstrap/Form";
+import { apiGet, apiPost } from "../../utils/api.js";
 
 const Stock = (parametros) => {
+  const [productos, setProductos] = useState([]);
+  const [showModalAgregar, setShowModalAgregar] = useState(false);
+
+  React.useEffect(() => {
+    const productos = async () => {
+      const resultados = await apiGet("productos", parametros.credencial.token);
+      setProductos(resultados.data);
+    };
+    productos();
+  }, [parametros.credencial.token]);
+
   if (!parametros.stock) {
     return <></>;
   }
-  if (!parametros.stock && !parametros.formAgregarProducto) {
-    return <></>;
-  }
-  if (parametros.formAgregarProducto) {
-    return (
-      <>
-        <div className="container">
-          <div className="container">
-            <div className="row">
-              <div className="col align-self-start">
-                <h1 className="m-4 text-light">
-                  Formulario para Agregar Producto
-                </h1>
-              </div>
-              <div className="col align-self-center"></div>
-            </div>
-          </div>
-
-          <FormAgregarProducto
-            formAgregarProducto={parametros.formAgregarProducto}
-            setStock={parametros.setStock}
-            setFormAgregarProducto={parametros.setFormAgregarProducto}
-          />
-        </div>
-      </>
-    );
-  }
-  const verFormAgregarProducto = () => {
-    parametros.setFormAgregarProducto(true);
+  const cerrarModalAgregar = () => setShowModalAgregar(false);
+  const mostrarModalAgregar = () => {
+    setShowModalAgregar(true);
+  };
+  const agregarProducto = async (
+    nombre,
+    codigo_barra,
+    precio_venta,
+    precio_compra
+  ) => {
+    if (nombre === "" || codigo_barra === "") {
+      return;
+    }
+    let data = {
+      nombre,
+      codigo_barra,
+      precio_venta: +precio_venta,
+      precio_compra: +precio_compra,
+    };
+    await apiPost("productos", data);
+    data = {
+      nombre,
+      codigo_barra,
+      precio_venta: +precio_venta,
+      precio_compra: +precio_compra,
+      total: 0,
+      salon: 0,
+      deposito: 0,
+    };
+    const productos2 = productos;
+    productos2.push(data);
+    setProductos(productos2);
+    setShowModalAgregar(false);
   };
   return (
     <>
@@ -46,7 +66,7 @@ const Stock = (parametros) => {
             <div className="col align-self-center"></div>
             <div className="col align-self-end text-end">
               <button
-                onClick={() => verFormAgregarProducto()}
+                onClick={() => mostrarModalAgregar()}
                 type="button"
                 className="btn btn-success m-4"
                 title="Agregar"
@@ -57,7 +77,55 @@ const Stock = (parametros) => {
           </div>
         </div>
 
-        <TablaProductos credencial={parametros.credencial} />
+        <TablaProductos
+          productos={productos}
+          setProductos={setProductos}
+          credencial={parametros.credencial}
+        />
+
+        <Modal show={showModalAgregar} onHide={cerrarModalAgregar}>
+          <Modal.Header closeButton>
+            <Modal.Title>Agregar producto !</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <Form>
+              <Form.Group className="mb-3">
+                <Form.Label>Nombre</Form.Label>
+                <Form.Control type="text" id="nombre" />
+              </Form.Group>
+              <Form.Group className="mb-3">
+                <Form.Label>Codigo de barra</Form.Label>
+                <Form.Control type="text" id="codigo_barra" />
+              </Form.Group>
+              <Form.Group className="mb-3">
+                <Form.Label>Precio de compra</Form.Label>
+                <Form.Control type="text" id="precio_compra" />
+              </Form.Group>
+              <Form.Group className="mb-3">
+                <Form.Label>Precio de venta</Form.Label>
+                <Form.Control type="text" id="precio_venta" />
+              </Form.Group>
+            </Form>
+          </Modal.Body>
+          <Modal.Footer>
+            <Button variant="secondary" onClick={cerrarModalAgregar}>
+              Cancelar
+            </Button>
+            <Button
+              variant="success"
+              onClick={() =>
+                agregarProducto(
+                  document.getElementById("nombre").value,
+                  document.getElementById("codigo_barra").value,
+                  document.getElementById("precio_compra").value,
+                  document.getElementById("precio_venta").value
+                )
+              }
+            >
+              Agregar
+            </Button>
+          </Modal.Footer>
+        </Modal>
       </div>
     </>
   );
