@@ -25,6 +25,8 @@ const Stock = (parametros) => {
 
           <FormAgregarProducto
             formAgregarProducto={parametros.formAgregarProducto}
+            setStock={parametros.setStock}
+            setFormAgregarProducto={parametros.setFormAgregarProducto}
           />
         </div>
       </>
