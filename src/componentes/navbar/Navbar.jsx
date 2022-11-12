@@ -42,14 +42,6 @@ const Navbar = (parametros) => {
     parametros.setBloqueado(true);
     parametros.setFormAgregarProducto(false);
   };
-  const signup = async () =>{
-    parametros.setHome(false);
-      parametros.setCaja(false);
-      parametros.setStock(false);
-      parametros.setBloqueado(false);
-      parametros.setFormAgregarProducto(false);
-      parametros.setSignup(true)
-  }
 
   return (
     <>
@@ -73,7 +65,6 @@ const Navbar = (parametros) => {
           >
             Stock
           </button>
-          <button onClick={() => signup()}>sing</button>
 
           <div className="collapse navbar-collapse" id="navbarSupportedContent">
             <ul className="navbar-nav me-auto mb-2 mb-lg-0"></ul>
