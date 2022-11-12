@@ -1,17 +1,19 @@
 import { apiPost } from "../../utils/api.js";
 
 const Login = (parametros) => {
-  
-
   const sendForm = async (event) => {
     event.preventDefault();
-    const response = await apiPost("auth/login", {
-      dni: document.getElementById("dni").value,
-      contraseña: document.getElementById("contraseña").value,
-    });
-    if (response.status === 200) {
-      parametros.setCredencial(response.data);
-    }
+    try {
+      const response = await apiPost("auth/login", {
+        dni: document.getElementById("dni").value,
+        contraseña: document.getElementById("contraseña").value,
+      });
+      if (response.status === 200) {
+        localStorage.setItem("token", response.data.token);
+        localStorage.setItem("userdata", JSON.stringify(response.data));
+        parametros.setCredencial(response.data);
+      }
+    } catch (error) {}
   };
   return (
     <>
@@ -32,12 +34,14 @@ const Login = (parametros) => {
                 <form onSubmit={(event) => sendForm(event)}>
                   <label className="font-500">DNI</label>
                   <input
+                    required
                     className="form-control form-control-lg mb-3"
                     id="dni"
                     type="number"
                   />
                   <label className="font-500">Contraseña</label>
                   <input
+                    required
                     className="form-control form-control-lg"
                     id="contraseña"
                     type="password"
