@@ -84,6 +84,7 @@ const Navbar = (parametros) => {
             <button
               className="btn btn-outline-danger"
               onClick={() => {
+                localStorage.clear();
                 parametros.setCredencial(null);
               }}
             >

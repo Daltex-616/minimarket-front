@@ -1,12 +1,13 @@
 import "./App.css";
 import Login from "./componentes/login/Login";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Navbar } from "./componentes/navbar/Navbar";
 import { Home } from "./componentes/home/Home";
 import { Caja } from "./componentes/caja/Caja";
 import { Stock } from "./componentes/stock/Stock";
 import { Signup } from "./componentes/signup/Signup";
 import { Bloqueado } from "./componentes/bloqueado/Bloqueado";
+import { apiGet } from "./utils/api.js";
 
 
 function App() {
@@ -17,6 +18,22 @@ function App() {
   const [bloqueado, setBloqueado] = useState(false);
   const [formAgregarProducto, setFormAgregarProducto] = useState(false);
   const [signup, setSignup] = useState(false)
+
+  useEffect(() => {
+    const logeado = async () => {
+      const resultado = localStorage.getItem("token")
+        ? await apiGet("auth/perfil", localStorage.getItem("token"))
+        : null;
+
+      if (resultado) {
+        setCredencial(JSON.parse(localStorage.getItem("userdata")));
+      } else {
+        setCredencial(null);
+        localStorage.clear();
+      }
+    };
+    logeado();
+  }, []);
 
   if (credencial) {
     return (

@@ -21,6 +21,7 @@ const Stock = (parametros) => {
   if (!parametros.stock) {
     return <></>;
   }
+
   const cerrarModalAgregar = () => setShowModalAgregar(false);
   const mostrarModalAgregar = () => {
     setShowModalAgregar(true);
@@ -28,8 +29,8 @@ const Stock = (parametros) => {
   const agregarProducto = async (
     nombre,
     codigo_barra,
-    precio_venta,
-    precio_compra
+    precio_compra,
+    precio_venta
   ) => {
     if (nombre === "" || codigo_barra === "") {
       return;
@@ -40,6 +41,7 @@ const Stock = (parametros) => {
       precio_venta: +precio_venta,
       precio_compra: +precio_compra,
     };
+    console.log(data);
     await apiPost("productos", data);
     data = {
       nombre,
@@ -99,11 +101,11 @@ const Stock = (parametros) => {
               </Form.Group>
               <Form.Group className="mb-3">
                 <Form.Label>Precio de compra</Form.Label>
-                <Form.Control type="text" id="precio_compra" />
+                <Form.Control type="number" id="precio_compra" />
               </Form.Group>
               <Form.Group className="mb-3">
                 <Form.Label>Precio de venta</Form.Label>
-                <Form.Control type="text" id="precio_venta" />
+                <Form.Control type="number" id="precio_venta" />
               </Form.Group>
             </Form>
           </Modal.Body>
@@ -117,8 +119,12 @@ const Stock = (parametros) => {
                 agregarProducto(
                   document.getElementById("nombre").value,
                   document.getElementById("codigo_barra").value,
-                  document.getElementById("precio_compra").value,
-                  document.getElementById("precio_venta").value
+                  document
+                    .getElementById("precio_compra")
+                    .value.replace(",", "."),
+                  document
+                    .getElementById("precio_venta")
+                    .value.replace(",", ".")
                 )
               }
             >
