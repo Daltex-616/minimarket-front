@@ -41,7 +41,6 @@ const Stock = (parametros) => {
       precio_venta: +precio_venta,
       precio_compra: +precio_compra,
     };
-    console.log(data);
     await apiPost("productos", data);
     data = {
       nombre,

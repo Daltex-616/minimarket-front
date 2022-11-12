@@ -52,15 +52,17 @@ function App() {
           formAgregarProducto={formAgregarProducto}
           setFormAgregarProducto={setFormAgregarProducto}
         />
-        <Home home={home} />
-        <Caja caja={caja} />
-        <Stock
+        
+        {!stock && !caja ? <Home home={home} /> : null}
+        {!stock && !home ? <Caja caja={caja} /> : null}
+        {!home && !caja ? <Stock
           stock={stock}
           setStock={setStock}
           credencial={credencial}
           formAgregarProducto={formAgregarProducto}
           setFormAgregarProducto={setFormAgregarProducto}
-        />
+        /> : null}
+        
         <Bloqueado bloqueado={bloqueado} />
       </>
     );
