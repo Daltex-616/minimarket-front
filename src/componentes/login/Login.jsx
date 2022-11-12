@@ -9,7 +9,6 @@ const Login = (parametros) => {
         contraseña: document.getElementById("contraseña").value,
       });
       if (response.status === 200) {
-        localStorage.setItem("token", response.data.token);
         localStorage.setItem("credenciales", JSON.stringify(response.data));
         parametros.setCredencial(response.data);
       }
