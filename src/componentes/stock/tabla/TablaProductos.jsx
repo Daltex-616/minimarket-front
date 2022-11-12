@@ -61,11 +61,11 @@ export const TablaProductos = (parametros) => {
     await apiPut("stock", data);
     const productos2 = parametros.productos.map((p) => {
       if (p.codigo_barra === codigoBarra) {
-        if(destino === 2 && p.deposito < cantidad){
+        if (destino === 2 && p.deposito < cantidad) {
           return p;
-        } else if(destino === 1 && p.salon < cantidad){
+        } else if (destino === 1 && p.salon < cantidad) {
           return p;
-        }else{
+        } else {
           return {
             nombre: p.nombre,
             codigo_barra: p.codigo_barra,
@@ -73,11 +73,12 @@ export const TablaProductos = (parametros) => {
             precio_venta: p.precio_venta,
             salon: +destino === 1 ? +p.salon - +cantidad : +p.salon + +cantidad,
             deposito:
-              +destino === 2 ? +p.deposito - +cantidad : +p.deposito + +cantidad,
+              +destino === 2
+                ? +p.deposito - +cantidad
+                : +p.deposito + +cantidad,
             total: p.total,
           };
         }
-
       }
       return p;
     });
@@ -109,7 +110,7 @@ export const TablaProductos = (parametros) => {
     precioCompra,
     precioVenta
   ) => {
-    if(nombre === ""){
+    if (nombre === "") {
       return;
     }
     const data = {
@@ -260,7 +261,9 @@ export const TablaProductos = (parametros) => {
 
       <Modal show={showModalMover} onHide={cerrarModalMover}>
         <Modal.Header closeButton>
-          <Modal.Title>Movimiento de producto al {destino === 1 ? "deposito" : "salon"}!</Modal.Title>
+          <Modal.Title>
+            Movimiento de producto al {destino === 1 ? "deposito" : "salon"}!
+          </Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Form>
@@ -375,8 +378,8 @@ export const TablaProductos = (parametros) => {
               guardarProducto(
                 document.getElementById("nombre").value,
                 document.getElementById("codigo_barra").value,
-                document.getElementById("precio_compra").value,
-                document.getElementById("precio_venta").value
+                document.getElementById("precio_compra").value.replace(",", "."),
+                document.getElementById("precio_venta").value.replace(",", "."),
               )
             }
           >
