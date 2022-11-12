@@ -5,7 +5,9 @@ import { Navbar } from "./componentes/navbar/Navbar";
 import { Home } from "./componentes/home/Home";
 import { Caja } from "./componentes/caja/Caja";
 import { Stock } from "./componentes/stock/Stock";
+import { Signup } from "./componentes/signup/Signup";
 import { Bloqueado } from "./componentes/bloqueado/Bloqueado";
+
 
 function App() {
   const [credencial, setCredencial] = useState(null);
@@ -14,6 +16,7 @@ function App() {
   const [stock, setStock] = useState(false);
   const [bloqueado, setBloqueado] = useState(false);
   const [formAgregarProducto, setFormAgregarProducto] = useState(false);
+  const [signup, setSignup] = useState(false)
 
   if (credencial) {
     return (
@@ -31,6 +34,10 @@ function App() {
           setBloqueado={setBloqueado}
           formAgregarProducto={formAgregarProducto}
           setFormAgregarProducto={setFormAgregarProducto}
+          signup={signup}
+          setSignup={setSignup}
+         
+          
         />
         <Home home={home} />
         <Caja caja={caja} />
@@ -42,10 +49,24 @@ function App() {
           setFormAgregarProducto={setFormAgregarProducto}
         />
         <Bloqueado bloqueado={bloqueado} />
+       
       </>
     );
   }
-  return <Login credencial={credencial} setCredencial={setCredencial} />;
+  return(
+  <>
+        <Login credencial={credencial} setCredencial={setCredencial} 
+        
+        
+        
+        />
+        <Signup signup={signup}/>
+        
+
+  </>
+  )
+  
+  
 }
 
 export default App;

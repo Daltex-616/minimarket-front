@@ -1,6 +1,7 @@
 import "./home.css"
 
 const Home = (parametros) => {
+  
   if (parametros.home === false) {
     return <></>;
   }

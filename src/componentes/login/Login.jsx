@@ -1,8 +1,9 @@
 import { apiPost } from "../../utils/api.js";
 
 const Login = (parametros) => {
-  
 
+  
+  
   const sendForm = async (event) => {
     event.preventDefault();
     const response = await apiPost("auth/login", {
@@ -49,6 +50,7 @@ const Login = (parametros) => {
                     ENTRAR
                   </button>
                 </form>
+                <p>si no tienes cuenta toca</p><button >aqui</button>
               </div>
             </div>
           </div>
