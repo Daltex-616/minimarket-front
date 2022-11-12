@@ -10,7 +10,7 @@ const Login = (parametros) => {
       });
       if (response.status === 200) {
         localStorage.setItem("token", response.data.token);
-        localStorage.setItem("userdata", JSON.stringify(response.data));
+        localStorage.setItem("credenciales", JSON.stringify(response.data));
         parametros.setCredencial(response.data);
       }
     } catch (error) {}

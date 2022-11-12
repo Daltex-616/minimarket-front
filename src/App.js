@@ -18,12 +18,15 @@ function App() {
 
   useEffect(() => {
     const logeado = async () => {
-      const resultado = localStorage.getItem("token")
-        ? await apiGet("auth/perfil", localStorage.getItem("token"))
-        : null;
+      const userdata = JSON.parse(localStorage.getItem("credenciales"));
+
+      const resultado =
+        userdata && userdata.token
+          ? await apiGet("auth/perfil", userdata.token)
+          : null;
 
       if (resultado) {
-        setCredencial(JSON.parse(localStorage.getItem("userdata")));
+        setCredencial(userdata);
       } else {
         setCredencial(null);
         localStorage.clear();
