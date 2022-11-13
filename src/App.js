@@ -20,12 +20,12 @@ function App() {
     const logeado = async () => {
       const userdata = JSON.parse(localStorage.getItem("credenciales"));
 
-      const resultado =
+      const perfil =
         userdata && userdata.token
           ? await apiGet("auth/perfil", userdata.token)
           : null;
 
-      if (resultado) {
+      if (perfil) {
         setCredencial(userdata);
       } else {
         setCredencial(null);

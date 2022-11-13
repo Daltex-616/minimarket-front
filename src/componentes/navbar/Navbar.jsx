@@ -51,7 +51,7 @@ const Navbar = (parametros) => {
       >
         <div className="container-fluid">
           <a href="/#" onClick={() => inicio()}>
-          <img alt="minimarket" src="./logo.png" width={"55px"}></img>
+            <img alt="minimarket" src="./logo.png" width={"55px"}></img>
           </a>
           <button
             className="btn btn-outline-primary m-1"

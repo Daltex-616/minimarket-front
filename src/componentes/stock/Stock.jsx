@@ -9,6 +9,7 @@ import { apiGet, apiPost } from "../../utils/api.js";
 const Stock = (parametros) => {
   const [productos, setProductos] = useState([]);
   const [showModalAgregar, setShowModalAgregar] = useState(false);
+  const [filtro, setFiltro] = useState("");
 
   React.useEffect(() => {
     const productos = async () => {
@@ -21,6 +22,14 @@ const Stock = (parametros) => {
   if (!parametros.stock) {
     return <></>;
   }
+
+  const productosFiltrados = productos.filter((producto) => {
+    return producto.codigo_barra.includes(filtro) || producto.nombre.toLowerCase().includes(filtro.toLowerCase()); 
+  });
+
+  const nuevo = (event) => {
+    setFiltro(event.target.value);
+  };
 
   const cerrarModalAgregar = () => setShowModalAgregar(false);
   const mostrarModalAgregar = () => {
@@ -79,7 +88,9 @@ const Stock = (parametros) => {
         </div>
 
         <TablaProductos
-          productos={productos}
+          nuevo={nuevo}
+          filtro={filtro}
+          productos={productosFiltrados}
           setProductos={setProductos}
           credencial={parametros.credencial}
         />

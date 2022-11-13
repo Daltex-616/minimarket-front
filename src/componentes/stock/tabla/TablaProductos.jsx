@@ -4,8 +4,10 @@ import { apiDelete, apiPut, apiPost } from "../../../utils/api.js";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import Form from "react-bootstrap/Form";
+import Filtro from "../filtro/Filtro";
 
 export const TablaProductos = (parametros) => {
+  const { nuevo, filtro } = parametros;
   const [showModalEliminar, setShowModalEliminar] = useState(false);
   const [showModalGuardar, setShowModalGuardar] = useState(false);
   const [showModalIngresar, setShowModalIngresar] = useState(false);
@@ -172,91 +174,95 @@ export const TablaProductos = (parametros) => {
 
   return (
     <>
-      <table className="table table-dark table-hover">
-        <thead>
-          <tr>
-            <th scope="col">Producto</th>
-            <th scope="col">Codigo de Barra</th>
-            <th scope="col">Precio Compra</th>
-            <th scope="col">Precio Venta</th>
-            <th scope="col">Stock Salon</th>
-            <th scope="col">Stock Deposito</th>
-            <th scope="col">Total</th>
-            <th scope="col">Acciones</th>
-          </tr>
-        </thead>
-        <tbody>
-          {parametros.productos.map((producto) => {
-            return (
-              <tr
-                key={producto.codigo_barra}
-                className={
-                  producto.total === 0
-                    ? "table-danger"
-                    : producto.total < 10
-                    ? "table-warning"
-                    : "table-success"
-                }
-              >
-                <td>{producto.nombre}</td>
-                <td>{producto.codigo_barra}</td>
-                <td>{producto.precio_compra}</td>
-                <td>{producto.precio_venta}</td>
-                <td>{producto.salon}</td>
-                <td>{producto.deposito}</td>
-                <td>{producto.total}</td>
-                <td>
-                  <button
-                    onClick={() => mostrarModalMover(producto, 2)}
-                    type="button"
-                    className="btn btn-light m-1"
-                    title="Mover al salon"
-                  >
-                    <i className="bi bi-box-arrow-left"></i>
-                  </button>
-                  <button
-                    onClick={() => mostrarModalMover(producto, 1)}
-                    type="button"
-                    className="btn btn-light m-1"
-                    title="Mover al deposito"
-                  >
-                    <i className="bi bi-box-arrow-right"></i>
-                  </button>
-                  <button
-                    onClick={() => mostrarModalIngresar(producto)}
-                    type="button"
-                    className="btn btn-primary m-1"
-                    title="Ingresar"
-                  >
-                    <i className="bi bi-box-arrow-down"></i>
-                  </button>
-                  <button
-                    onClick={() => mostrarModalGuardar(producto)}
-                    type="button"
-                    className="btn btn-warning m-1"
-                    title="Editar"
-                  >
-                    <i className="bi bi-pencil-square"></i>
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() =>
-                      mostrarModalEliminar(
-                        producto.nombre,
-                        producto.codigo_barra
-                      )
-                    }
-                    className="btn btn-danger m-1"
-                    title="Eliminar"
-                  >
-                    <i className="bi bi-trash"></i>
-                  </button>
-                </td>
-              </tr>
-            );
-          })}
-        </tbody>
-      </table>
+      <Filtro nuevo={nuevo} filtro={filtro} />
+      <br />
+      {filtro !== "" ? (
+        <table className="table table-dark table-hover">
+          <thead>
+            <tr>
+              <th scope="col">Producto</th>
+              <th scope="col">Codigo de Barra</th>
+              <th scope="col">Precio Compra</th>
+              <th scope="col">Precio Venta</th>
+              <th scope="col">Stock Salon</th>
+              <th scope="col">Stock Deposito</th>
+              <th scope="col">Total</th>
+              <th scope="col">Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            {parametros.productos.map((producto) => {
+              return (
+                <tr
+                  key={producto.codigo_barra}
+                  className={
+                    producto.total === 0
+                      ? "table-danger"
+                      : producto.total < 10
+                      ? "table-warning"
+                      : "table-success"
+                  }
+                >
+                  <td>{producto.nombre}</td>
+                  <td>{producto.codigo_barra}</td>
+                  <td>{producto.precio_compra}</td>
+                  <td>{producto.precio_venta}</td>
+                  <td>{producto.salon}</td>
+                  <td>{producto.deposito}</td>
+                  <td>{producto.total}</td>
+                  <td>
+                    <button
+                      onClick={() => mostrarModalMover(producto, 2)}
+                      type="button"
+                      className="btn btn-light m-1"
+                      title="Mover al salon"
+                    >
+                      <i className="bi bi-box-arrow-left"></i>
+                    </button>
+                    <button
+                      onClick={() => mostrarModalMover(producto, 1)}
+                      type="button"
+                      className="btn btn-light m-1"
+                      title="Mover al deposito"
+                    >
+                      <i className="bi bi-box-arrow-right"></i>
+                    </button>
+                    <button
+                      onClick={() => mostrarModalIngresar(producto)}
+                      type="button"
+                      className="btn btn-primary m-1"
+                      title="Ingresar"
+                    >
+                      <i className="bi bi-box-arrow-down"></i>
+                    </button>
+                    <button
+                      onClick={() => mostrarModalGuardar(producto)}
+                      type="button"
+                      className="btn btn-warning m-1"
+                      title="Editar"
+                    >
+                      <i className="bi bi-pencil-square"></i>
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() =>
+                        mostrarModalEliminar(
+                          producto.nombre,
+                          producto.codigo_barra
+                        )
+                      }
+                      className="btn btn-danger m-1"
+                      title="Eliminar"
+                    >
+                      <i className="bi bi-trash"></i>
+                    </button>
+                  </td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+      ) : null}
       <br />
 
       <Modal show={showModalMover} onHide={cerrarModalMover}>
@@ -378,8 +384,10 @@ export const TablaProductos = (parametros) => {
               guardarProducto(
                 document.getElementById("nombre").value,
                 document.getElementById("codigo_barra").value,
-                document.getElementById("precio_compra").value.replace(",", "."),
-                document.getElementById("precio_venta").value.replace(",", "."),
+                document
+                  .getElementById("precio_compra")
+                  .value.replace(",", "."),
+                document.getElementById("precio_venta").value.replace(",", ".")
               )
             }
           >
