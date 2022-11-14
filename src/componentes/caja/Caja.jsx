@@ -1,55 +1,57 @@
+import { apiPost } from "../../utils/api.js";
+import { useState } from "react";
+import { TablaVenta } from "./TablaVenta.jsx";
 
 const Caja = (parametros) => {
-  if(parametros.caja === false){
-    return (
-      <>
+  const [productos, setProductos] = useState([]);
+  const [filtro, setFiltro] = useState("");
 
-      </>
-    );
+  if (parametros.caja === false) {
+    return <></>;
   }
+  const ingresarProducto = async (event) => {
+    const input = event.target.value;
+
+    const data = {
+      codigo_barra: input,
+    };
+    if (input !== "") {
+      const result = await apiPost("productos/buscar", data);
+
+      const productos2 = [...productos, result.data];
+      setProductos(productos2);
+
+      console.log(productos);
+      //setProductos(productos.push(result.data));
+
+      document.getElementById("Agregar").value = "";
+
+      //setFiltro(Date.now()+Math.floor(Math.random()*999))
+    }
+  };
   return (
     <>
-      <div className="row bg-light">
-        <div className="col-sm-8">
-        <form>
-            <div className="form-group">
-              <input type="text" className="form-control" id="inputdefault" placeholder="Introducir Codigo de Barras" />
-            </div>
-          </form>
-          <table className="table">
-            <thead>
-              <tr>
-                <th>Codigo de Barras</th>
-                <th> Nombre </th>
-                <th> Precio </th>
-                <th> Cantidad </th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>7790580660000</td>
-                <td>PRESTO PONTA POLENTA INSTANTÁNEA</td>
-                <td>$100</td>
-                <div className="row">
-                  <input id="inputsm" type="number" min="1" className="col form-control input-sm" placeholder="Min 1" />
-                  <button className="col">+</button>
-                  <button className="col">-</button>
-                </div>
-              </tr>
-            </tbody>
+      <br />
 
-          </table>
-        </div>
-        <div className="col-sm-1">
-          <div className="col-sm-1">
-            <h1> Total </h1>
-            <h1>$3444.55</h1>
-            <div>
-              <input type="number" placeholder="Ingresar Monto de Pago" />
-            </div>
+      <div className="container bg-light">
+        <div className="row aling-items-center">
+          <div className="col-sm-8 ">
+            <input
+              id="Agregar"
+              onChange={(event) => ingresarProducto(event)}
+              type="text"
+              className="form-control"
+              placeholder=" Codigo de Barras "
+              aria-label=" Codigo de Barras "
+            />
+          </div>
+          <div className="col-sm-4">
+            <h1>Total</h1>
           </div>
         </div>
       </div>
+
+      <TablaVenta productos={productos} />
     </>
   );
 };
