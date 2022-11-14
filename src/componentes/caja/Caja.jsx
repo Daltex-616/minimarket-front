@@ -16,11 +16,11 @@ const Caja = (parametros) => {
     };
     if (input !== "") {
       const result = await apiPost("productos/buscar", data);
-
-      const productos2 = [...productos, result.data];
-      setProductos(productos2);
-
-      document.getElementById("Agregar").value = "";
+      if (result.data !== "Producto inexistente") {
+        const productos2 = [...productos, result.data];
+        setProductos(productos2);
+        document.getElementById("Agregar").value = "";
+      }
     }
   };
   return (
