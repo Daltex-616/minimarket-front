@@ -52,6 +52,7 @@ const FormAgregarProducto = (parametros) => {
   </form>
   <div className="from-group row bg-light">
   <button  onClick={() => cerrar() } id="cerrarformagregarprod">Salir</button>
+  
   </div>
   </div>
 </div>

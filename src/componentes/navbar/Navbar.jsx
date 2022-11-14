@@ -5,6 +5,7 @@ const Navbar = (parametros) => {
     parametros.setStock(false);
     parametros.setBloqueado(false);
     parametros.setFormAgregarProducto(false);
+    parametros.setSignup(false)
   };
 
   const roles = parametros.credencial.roles;
@@ -17,6 +18,7 @@ const Navbar = (parametros) => {
       parametros.setStock(false);
       parametros.setBloqueado(false);
       parametros.setFormAgregarProducto(false);
+      parametros.setSignup(false)
       return;
     }
     parametros.setHome(false);
@@ -24,6 +26,7 @@ const Navbar = (parametros) => {
     parametros.setStock(false);
     parametros.setBloqueado(true);
     parametros.setFormAgregarProducto(false);
+    parametros.setSignup(false)
   };
 
   const stock = async () => {
@@ -34,6 +37,7 @@ const Navbar = (parametros) => {
       parametros.setStock(true);
       parametros.setBloqueado(false);
       parametros.setFormAgregarProducto(false);
+      parametros.setSignup(false)
       return;
     }
     parametros.setHome(false);
@@ -41,6 +45,25 @@ const Navbar = (parametros) => {
     parametros.setStock(false);
     parametros.setBloqueado(true);
     parametros.setFormAgregarProducto(false);
+    parametros.setSignup(false)
+  };
+  const signup = async () => {
+    const permisos = roles.find((rol) => rol.rolId === 1);
+    if (permisos) {
+      parametros.setHome(false);
+      parametros.setCaja(false);
+      parametros.setStock(false);
+      parametros.setBloqueado(false);
+      parametros.setFormAgregarProducto(false);
+      parametros.setSignup(true)
+      return;
+    }
+    parametros.setHome(false);
+    parametros.setCaja(false);
+    parametros.setStock(false);
+    parametros.setBloqueado(true);
+    parametros.setFormAgregarProducto(false);
+    parametros.setSignup(false)
   };
 
   return (
@@ -64,6 +87,12 @@ const Navbar = (parametros) => {
             onClick={() => stock()}
           >
             Stock
+          </button>
+          <button
+            className="btn btn-outline-primary m-1"
+            onClick={() => signup()}
+          >
+            signup
           </button>
 
           <div className="collapse navbar-collapse" id="navbarSupportedContent">

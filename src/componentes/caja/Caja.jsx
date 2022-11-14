@@ -1,17 +1,16 @@
-
 const Caja = (parametros) => {
-  if(parametros.caja === false){
+    if(parametros.caja === false){
+      return (
+        <>
+   
+        </>
+      );
+    }
     return (
       <>
-
+        Caja rrrge
       </>
     );
-  }
-  return (
-    <>
-      Caja rrrge
-    </>
-  );
-};
-
-export { Caja };
+  };
+  
+  export { Caja };

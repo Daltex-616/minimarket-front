@@ -8,6 +8,7 @@ import { Stock } from "./componentes/stock/Stock";
 import { Bloqueado } from "./componentes/bloqueado/Bloqueado";
 import { apiGet } from "./utils/api.js";
 
+
 function App() {
   const [credencial, setCredencial] = useState(null);
   const [home, setHome] = useState(true);
@@ -15,6 +16,7 @@ function App() {
   const [stock, setStock] = useState(false);
   const [bloqueado, setBloqueado] = useState(false);
   const [formAgregarProducto, setFormAgregarProducto] = useState(false);
+ 
 
   useEffect(() => {
     const logeado = async () => {
@@ -51,6 +53,9 @@ function App() {
           setBloqueado={setBloqueado}
           formAgregarProducto={formAgregarProducto}
           setFormAgregarProducto={setFormAgregarProducto}
+         
+         
+          
         />
         
         {!stock && !caja ? <Home home={home} /> : null}
@@ -64,10 +69,25 @@ function App() {
         /> : null}
         
         <Bloqueado bloqueado={bloqueado} />
+       
+       
       </>
     );
   }
-  return <Login credencial={credencial} setCredencial={setCredencial} />;
+  return(
+  <>
+        <Login credencial={credencial} setCredencial={setCredencial} 
+        
+        
+        
+        />
+    
+        
+
+  </>
+  )
+  
+  
 }
 
 export default App;
