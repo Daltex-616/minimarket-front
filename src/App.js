@@ -5,7 +5,6 @@ import { Navbar } from "./componentes/navbar/Navbar";
 import { Home } from "./componentes/home/Home";
 import { Caja } from "./componentes/caja/Caja";
 import { Stock } from "./componentes/stock/Stock";
-import { Signup } from "./componentes/signup/Signup";
 import { Bloqueado } from "./componentes/bloqueado/Bloqueado";
 import { apiGet } from "./utils/api.js";
 
@@ -17,7 +16,7 @@ function App() {
   const [stock, setStock] = useState(false);
   const [bloqueado, setBloqueado] = useState(false);
   const [formAgregarProducto, setFormAgregarProducto] = useState(false);
-  const [signup, setSignup] = useState(false)
+ 
 
   useEffect(() => {
     const logeado = async () => {
@@ -51,8 +50,7 @@ function App() {
           setBloqueado={setBloqueado}
           formAgregarProducto={formAgregarProducto}
           setFormAgregarProducto={setFormAgregarProducto}
-          signup={signup}
-          setSignup={setSignup}
+         
          
           
         />
@@ -67,6 +65,7 @@ function App() {
         />
         <Bloqueado bloqueado={bloqueado} />
        
+       
       </>
     );
   }
@@ -77,7 +76,7 @@ function App() {
         
         
         />
-        <Signup signup={signup}/>
+    
         
 
   </>

@@ -55,7 +55,7 @@ const Login = (parametros) => {
                     ENTRAR
                   </button>
                 </form>
-                <p>si no tienes cuenta toca</p><button >aqui</button>
+                <p className="float-right">si no tienes cuenta toca</p><button className="btn btn-outline-warning float-md-left" >aqui</button>
               </div>
             </div>
           </div>
