@@ -1,3 +1,7 @@
+<<<<<<< HEAD
+=======
+
+>>>>>>> 5e0036beda2632ec69f2c8add28240f0d9f3c644
 const TablaVenta = (parametros) => {
 return(
     <table className="table table-dark table-hover">
