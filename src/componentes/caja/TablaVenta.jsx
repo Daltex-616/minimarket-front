@@ -1,5 +1,3 @@
-
-
 const TablaVenta = (parametros) => {
 return(
     <table className="table table-dark table-hover">
