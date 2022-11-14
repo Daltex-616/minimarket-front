@@ -1,4 +1,4 @@
-import { get } from "react-hook-form";
+
 
 const TablaVenta = (parametros) => {
 return(
