@@ -9,7 +9,6 @@ const Navbar = (parametros) => {
   };
 
   const roles = parametros.credencial.roles;
-
   const caja = async () => {
     const permisos = roles.find((rol) => rol.rolId === 2 || rol.rolId === 1);
     if (permisos) {
@@ -88,12 +87,12 @@ const Navbar = (parametros) => {
           >
             Stock
           </button>
-          <button
+          {<button
             className="btn btn-outline-primary m-1"
             onClick={() => signup()}
           >
             signup
-          </button>
+          </button>}
 
           <div className="collapse navbar-collapse" id="navbarSupportedContent">
             <ul className="navbar-nav me-auto mb-2 mb-lg-0"></ul>
