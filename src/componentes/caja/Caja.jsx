@@ -4,7 +4,6 @@ import { TablaVenta } from "./TablaVenta.jsx";
 
 const Caja = (parametros) => {
   const [productos, setProductos] = useState([]);
-  let Total;
 
   if (parametros.caja === false) {
     return <></>;
@@ -21,7 +20,7 @@ const Caja = (parametros) => {
         const productos2 = [...productos, result.data];
 
         setProductos(productos2);
-
+        console.log(productos2);
         document.getElementById("Agregar").value = "";
       }
     }
@@ -33,20 +32,20 @@ const Caja = (parametros) => {
       <div className="container bg-light">
         <div className="row aling-items-center">
           <div className="col-sm-8 ">
-            <input
-              id="Agregar"
-              onChange={(event) => ingresarProducto(event)}
-              type="text"
-              className="form-control"
-              placeholder=" Codigo de Barras "
-              aria-label=" Codigo de Barras "
-            />
+            <div className="input-group input-group-lg mt-3">
+              <input
+                id="Agregar"
+                onChange={(event) => ingresarProducto(event)}
+                type="text"
+                className="form-control"
+                placeholder="Ingrese el codigo de barra"
+              ></input>
+            </div>
           </div>
-          
         </div>
       </div>
 
-      <TablaVenta productos={productos} Total={Total} />
+      <TablaVenta productos={productos} setProductos={setProductos} />
     </>
   );
 };
