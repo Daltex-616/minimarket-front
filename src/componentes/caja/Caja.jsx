@@ -4,6 +4,7 @@ import { TablaVenta } from "./TablaVenta.jsx";
 
 const Caja = (parametros) => {
   const [productos, setProductos] = useState([]);
+  let Total;
 
   if (parametros.caja === false) {
     return <></>;
@@ -18,7 +19,9 @@ const Caja = (parametros) => {
       const result = await apiPost("productos/buscar", data);
       if (result.data !== "Producto inexistente") {
         const productos2 = [...productos, result.data];
+
         setProductos(productos2);
+
         document.getElementById("Agregar").value = "";
       }
     }
@@ -39,13 +42,11 @@ const Caja = (parametros) => {
               aria-label=" Codigo de Barras "
             />
           </div>
-          <div className="col-sm-4">
-            <h1>Total</h1>
-          </div>
+          
         </div>
       </div>
 
-      <TablaVenta productos={productos} />
+      <TablaVenta productos={productos} Total={Total} />
     </>
   );
 };
