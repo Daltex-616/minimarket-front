@@ -20,7 +20,7 @@ const Caja = (parametros) => {
         const productos2 = [...productos, result.data];
 
         setProductos(productos2);
-        console.log(productos2);
+        
         document.getElementById("Agregar").value = "";
       }
     }
