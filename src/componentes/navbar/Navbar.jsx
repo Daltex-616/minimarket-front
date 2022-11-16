@@ -91,7 +91,7 @@ const Navbar = (parametros) => {
             className="btn btn-outline-primary m-1"
             onClick={() => signup()}
           >
-            signup
+            Usuarios
           </button>}
 
           <div className="collapse navbar-collapse" id="navbarSupportedContent">

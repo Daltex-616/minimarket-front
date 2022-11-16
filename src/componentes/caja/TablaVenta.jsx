@@ -37,13 +37,13 @@ const TablaVenta = (parametros) => {
 
   const cancelarVenta = () => {
     parametros.setProductos([]);
-    document.getElementById("pago").value = 0;
+    document.getElementById("pago").value = "";
     setShoww(false)
   };
   const procesarVenta = async () => {
     await apiPost("venta", parametros.productos);
     parametros.setProductos([]);
-    document.getElementById("pago").value = 0;
+    document.getElementById("pago").value = "";
     setShow(false);
   };
 
@@ -96,30 +96,30 @@ const TablaVenta = (parametros) => {
             id="pago"
             onChange={() => calcularVuelto()}
           />
-
+          <br /><br />
           <div className="row">
             <div className="col">Vuelto $</div>
             <div className="col">
               <p id="vuelto">{vuelto}</p>
             </div>
           </div>
-          <Button variant="success" onClick={()=>handleShow()}>
+          <Button variant="success m-2" onClick={()=>handleShow()}>
             Procesar Venta
           </Button>
           
           <Modal show={show} onHide={handleClose}>
             <Modal.Header closeButton>
-              <Modal.Title>¿Desea proceder con la operacion?</Modal.Title>
+              <Modal.Title>¿Desea procesar la operacion?</Modal.Title>
             </Modal.Header>
             <Modal.Body>
               El valor total es ${total} y el cambio a dar es ${vuelto}
             </Modal.Body>
             <Modal.Footer>
               <Button variant="danger" onClick={()=>handleClose()}>
-                Cancelar
+                No
               </Button>
               <Button variant="success" onClick={()=>procesarVenta()}>
-                Proceder
+                Si
               </Button>
             </Modal.Footer>
           </Modal>
@@ -128,17 +128,17 @@ const TablaVenta = (parametros) => {
           </Button>
           <Modal show={showw} onHide={handleClosee}>
             <Modal.Header closeButton>
-              <Modal.Title>¿Desea proceder con la operacion?</Modal.Title>
+              <Modal.Title>¿Desea cancelar toda la operacion?</Modal.Title>
             </Modal.Header>
             <Modal.Body>
-              ¿Desea cancelar toda la operacion?
+              Advertencia: Se eliminaran todos los productos de la lista !
             </Modal.Body>
             <Modal.Footer>
               <Button variant="danger" onClick={() => handleClosee()}>
-                Cancelar
+                No
               </Button>
               <Button variant="success" onClick={() => cancelarVenta()}>
-                Proceder
+                Si
               </Button>
             </Modal.Footer>
           </Modal>

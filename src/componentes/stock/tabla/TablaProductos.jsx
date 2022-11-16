@@ -1,6 +1,6 @@
 import { useState } from "react";
 import React from "react";
-import { apiDelete, apiPut, apiPost } from "../../../utils/api.js";
+import { apiDelete, apiPut, apiPost, apiGet } from "../../../utils/api.js";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import Form from "react-bootstrap/Form";
@@ -61,30 +61,8 @@ export const TablaProductos = (parametros) => {
       cantidad: +cantidad,
     };
     await apiPut("stock", data);
-    const productos2 = parametros.productos.map((p) => {
-      if (p.codigo_barra === codigoBarra) {
-        if (destino === 2 && p.deposito < cantidad) {
-          return p;
-        } else if (destino === 1 && p.salon < cantidad) {
-          return p;
-        } else {
-          return {
-            nombre: p.nombre,
-            codigo_barra: p.codigo_barra,
-            precio_compra: p.precio_compra,
-            precio_venta: p.precio_venta,
-            salon: +destino === 1 ? +p.salon - +cantidad : +p.salon + +cantidad,
-            deposito:
-              +destino === 2
-                ? +p.deposito - +cantidad
-                : +p.deposito + +cantidad,
-            total: p.total,
-          };
-        }
-      }
-      return p;
-    });
-    parametros.setProductos(productos2);
+    const resultados = await apiGet("productos", parametros.credencial.token);
+    parametros.setProductos(resultados.data);
     setNombre("");
     setCodigoBarra("");
     setPrecioVenta("");
@@ -97,10 +75,8 @@ export const TablaProductos = (parametros) => {
       codigo_barra: codigo_barra,
     };
     await apiDelete("productos", data);
-    const productos2 = parametros.productos.filter(
-      (producto) => producto.codigo_barra !== codigo_barra
-    );
-    parametros.setProductos(productos2);
+    const resultados = await apiGet("productos", parametros.credencial.token);
+    parametros.setProductos(resultados.data);
     setNombre("");
     setCodigoBarra("");
     setShowModalEliminar(false);
@@ -122,21 +98,8 @@ export const TablaProductos = (parametros) => {
       precio_venta: precioVenta,
     };
     await apiPut("productos", data);
-    const productos2 = parametros.productos.map((p) => {
-      if (p.codigo_barra === codigoBarra) {
-        return {
-          nombre: nombre,
-          codigo_barra: codigoBarra,
-          precio_compra: precioCompra,
-          precio_venta: precioVenta,
-          salon: p.salon,
-          deposito: p.deposito,
-          total: p.total,
-        };
-      }
-      return p;
-    });
-    parametros.setProductos(productos2);
+    const resultados = await apiGet("productos", parametros.credencial.token);
+    parametros.setProductos(resultados.data);
     setNombre("");
     setCodigoBarra("");
     setPrecioVenta("");
@@ -150,21 +113,8 @@ export const TablaProductos = (parametros) => {
       cantidad: +cantidad,
     };
     await apiPost("stock", data);
-    const productos2 = parametros.productos.map((p) => {
-      if (p.codigo_barra === codigoBarra) {
-        return {
-          nombre: p.nombre,
-          codigo_barra: p.codigo_barra,
-          precio_compra: p.precio_compra,
-          precio_venta: p.precio_venta,
-          salon: p.salon,
-          deposito: +p.deposito + +cantidad,
-          total: +p.total + +cantidad,
-        };
-      }
-      return p;
-    });
-    parametros.setProductos(productos2);
+    const resultados = await apiGet("productos", parametros.credencial.token);
+    parametros.setProductos(resultados.data);
     setNombre("");
     setCodigoBarra("");
     setPrecioVenta("");
