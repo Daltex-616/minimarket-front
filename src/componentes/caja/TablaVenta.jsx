@@ -38,7 +38,7 @@ const TablaVenta = (parametros) => {
   const cancelarVenta = () => {
     parametros.setProductos([]);
     document.getElementById("pago").value = "";
-    setShoww(false)
+    setShoww(false);
   };
   const procesarVenta = async () => {
     await apiPost("venta", parametros.productos);
@@ -96,17 +96,18 @@ const TablaVenta = (parametros) => {
             id="pago"
             onChange={() => calcularVuelto()}
           />
-          <br /><br />
+          <br />
+          <br />
           <div className="row">
             <div className="col">Vuelto $</div>
             <div className="col">
               <p id="vuelto">{vuelto}</p>
             </div>
           </div>
-          <Button variant="success m-2" onClick={()=>handleShow()}>
+          <Button variant="success m-2" onClick={() => handleShow()}>
             Procesar Venta
           </Button>
-          
+
           <Modal show={show} onHide={handleClose}>
             <Modal.Header closeButton>
               <Modal.Title>¿Desea procesar la operacion?</Modal.Title>
@@ -115,10 +116,10 @@ const TablaVenta = (parametros) => {
               El valor total es ${total} y el cambio a dar es ${vuelto}
             </Modal.Body>
             <Modal.Footer>
-              <Button variant="danger" onClick={()=>handleClose()}>
+              <Button variant="danger" onClick={() => handleClose()}>
                 No
               </Button>
-              <Button variant="success" onClick={()=>procesarVenta()}>
+              <Button variant="success" onClick={() => procesarVenta()}>
                 Si
               </Button>
             </Modal.Footer>
@@ -142,9 +143,6 @@ const TablaVenta = (parametros) => {
               </Button>
             </Modal.Footer>
           </Modal>
-          
-
-          
         </div>
       </div>
     </div>

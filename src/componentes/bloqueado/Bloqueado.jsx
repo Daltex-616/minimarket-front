@@ -1,15 +1,12 @@
-
 const Bloqueado = (parametros) => {
-  if(parametros.bloqueado === false){
-    return (
-      <>
-
-      </>
-    );
+  if (parametros.bloqueado === false) {
+    return <></>;
   }
   return (
     <>
-      No tienes permiso para acceder a este modulo
+      <div class="alert alert-danger m-4" role="alert">
+        No tienes permiso para acceder a este modulo
+      </div>
     </>
   );
 };

@@ -1,10 +1,10 @@
 import { useState } from "react";
 import React from "react";
-import { apiDelete, apiPut, apiPost, apiGet } from "../../../utils/api.js";
-import Button from "react-bootstrap/Button";
-import Modal from "react-bootstrap/Modal";
-import Form from "react-bootstrap/Form";
 import Filtro from "../filtro/Filtro";
+import { EliminarProducto } from "../productos/EliminarProducto.jsx";
+import { EditarProducto } from "../productos/EditarProducto.jsx";
+import { IngresarProducto } from "../productos/IngresarProducto.jsx";
+import { MoverProducto } from "../productos/MoverProducto.jsx";
 
 export const TablaProductos = (parametros) => {
   const { nuevo, filtro } = parametros;
@@ -51,75 +51,6 @@ export const TablaProductos = (parametros) => {
     setCodigoBarra(producto.codigo_barra);
     setPrecioVenta(producto.precio_venta);
     setPrecioCompra(producto.precio_compra);
-  };
-
-  const moverProducto = async (cantidad, destino) => {
-    const data = {
-      codigo_barra: codigoBarra,
-      origen: +destino === 1 ? 2 : 1,
-      destino: +destino,
-      cantidad: +cantidad,
-    };
-    await apiPut("stock", data);
-    const resultados = await apiGet("productos", parametros.credencial.token);
-    parametros.setProductos(resultados.data);
-    setNombre("");
-    setCodigoBarra("");
-    setPrecioVenta("");
-    setPrecioCompra("");
-    setShowModalMover(false);
-  };
-
-  const eliminarProducto = async (codigo_barra) => {
-    const data = {
-      codigo_barra: codigo_barra,
-    };
-    await apiDelete("productos", data);
-    const resultados = await apiGet("productos", parametros.credencial.token);
-    parametros.setProductos(resultados.data);
-    setNombre("");
-    setCodigoBarra("");
-    setShowModalEliminar(false);
-  };
-
-  const guardarProducto = async (
-    nombre,
-    codigoBarra,
-    precioCompra,
-    precioVenta
-  ) => {
-    if (nombre === "") {
-      return;
-    }
-    const data = {
-      nombre: nombre,
-      codigo_barra: codigoBarra,
-      precio_compra: precioCompra,
-      precio_venta: precioVenta,
-    };
-    await apiPut("productos", data);
-    const resultados = await apiGet("productos", parametros.credencial.token);
-    parametros.setProductos(resultados.data);
-    setNombre("");
-    setCodigoBarra("");
-    setPrecioVenta("");
-    setPrecioCompra("");
-    setShowModalGuardar(false);
-  };
-
-  const ingresarProducto = async (cantidad) => {
-    const data = {
-      codigo_barra: codigoBarra,
-      cantidad: +cantidad,
-    };
-    await apiPost("stock", data);
-    const resultados = await apiGet("productos", parametros.credencial.token);
-    parametros.setProductos(resultados.data);
-    setNombre("");
-    setCodigoBarra("");
-    setPrecioVenta("");
-    setPrecioCompra("");
-    setShowModalIngresar(false);
   };
 
   return (
@@ -215,154 +146,66 @@ export const TablaProductos = (parametros) => {
       ) : null}
       <br />
 
-      <Modal show={showModalMover} onHide={cerrarModalMover}>
-        <Modal.Header closeButton>
-          <Modal.Title>
-            Movimiento de producto al {destino === 1 ? "deposito" : "salon"}!
-          </Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <Form>
-            <Form.Group className="mb-3">
-              <Form.Label>Nombre</Form.Label>
-              <Form.Control type="text" defaultValue={nombre} disabled />
-            </Form.Group>
-            <Form.Group className="mb-3">
-              <Form.Label>Codigo de barra</Form.Label>
-              <Form.Control type="text" defaultValue={codigoBarra} disabled />
-            </Form.Group>
-            <Form.Group className="mb-3">
-              <Form.Label>Cantidad a mover</Form.Label>
-              <Form.Control type="number" id="cantidad" />
-            </Form.Group>
-          </Form>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={cerrarModalMover}>
-            Cancelar
-          </Button>
-          <Button
-            variant="success"
-            onClick={() =>
-              moverProducto(document.getElementById("cantidad").value, destino)
-            }
-          >
-            Mover
-          </Button>
-        </Modal.Footer>
-      </Modal>
+      <MoverProducto
+        credencial={parametros.credencial}
+        setProductos={parametros.setProductos}
+        setNombre={setNombre}
+        setCodigoBarra={setCodigoBarra}
+        setShowModalMover={setShowModalMover}
+        showModalMover={showModalMover}
+        cerrarModalMover={cerrarModalMover}
+        nombre={nombre}
+        precioCompra={precioCompra}
+        precioVenta={precioVenta}
+        codigoBarra={codigoBarra}
+        setPrecioVenta={setPrecioVenta}
+        setPrecioCompra={setPrecioCompra}
+        destino={destino}
+      />
 
-      <Modal show={showModalIngresar} onHide={cerrarModalIngresar}>
-        <Modal.Header closeButton>
-          <Modal.Title>Ingreso de producto !</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <Form>
-            <Form.Group className="mb-3">
-              <Form.Label>Nombre</Form.Label>
-              <Form.Control type="text" defaultValue={nombre} disabled />
-            </Form.Group>
-            <Form.Group className="mb-3">
-              <Form.Label>Codigo de barra</Form.Label>
-              <Form.Control type="text" defaultValue={codigoBarra} disabled />
-            </Form.Group>
-            <Form.Group className="mb-3">
-              <Form.Label>Cantidad a ingresar al deposito</Form.Label>
-              <Form.Control type="number" id="cantidad" />
-            </Form.Group>
-          </Form>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={cerrarModalIngresar}>
-            Cancelar
-          </Button>
-          <Button
-            variant="success"
-            onClick={() =>
-              ingresarProducto(document.getElementById("cantidad").value)
-            }
-          >
-            Ingresar
-          </Button>
-        </Modal.Footer>
-      </Modal>
+      <IngresarProducto
+        credencial={parametros.credencial}
+        setProductos={parametros.setProductos}
+        setNombre={setNombre}
+        setCodigoBarra={setCodigoBarra}
+        setShowModalIngresar={setShowModalIngresar}
+        showModalIngresar={showModalIngresar}
+        cerrarModalIngresar={cerrarModalIngresar}
+        nombre={nombre}
+        precioCompra={precioCompra}
+        precioVenta={precioVenta}
+        codigoBarra={codigoBarra}
+        setPrecioVenta={setPrecioVenta}
+        setPrecioCompra={setPrecioCompra}
+      />
 
-      <Modal show={showModalGuardar} onHide={cerrarModalGuardar}>
-        <Modal.Header closeButton>
-          <Modal.Title>Edicion de producto !</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <Form>
-            <Form.Group className="mb-3">
-              <Form.Label>Nombre</Form.Label>
-              <Form.Control type="text" defaultValue={nombre} id="nombre" />
-            </Form.Group>
-            <Form.Group className="mb-3">
-              <Form.Label>Codigo de barra</Form.Label>
-              <Form.Control
-                type="text"
-                defaultValue={codigoBarra}
-                id="codigo_barra"
-                disabled
-              />
-            </Form.Group>
-            <Form.Group className="mb-3">
-              <Form.Label>Precio de compra</Form.Label>
-              <Form.Control
-                type="number"
-                defaultValue={precioCompra}
-                id="precio_compra"
-              />
-            </Form.Group>
-            <Form.Group className="mb-3">
-              <Form.Label>Precio de venta</Form.Label>
-              <Form.Control
-                type="number"
-                defaultValue={precioVenta}
-                id="precio_venta"
-              />
-            </Form.Group>
-          </Form>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={cerrarModalGuardar}>
-            Cancelar
-          </Button>
-          <Button
-            variant="success"
-            onClick={() =>
-              guardarProducto(
-                document.getElementById("nombre").value,
-                document.getElementById("codigo_barra").value,
-                document
-                  .getElementById("precio_compra")
-                  .value.replace(",", "."),
-                document.getElementById("precio_venta").value.replace(",", ".")
-              )
-            }
-          >
-            Guardar
-          </Button>
-        </Modal.Footer>
-      </Modal>
+      <EditarProducto
+        credencial={parametros.credencial}
+        setProductos={parametros.setProductos}
+        setNombre={setNombre}
+        setCodigoBarra={setCodigoBarra}
+        setShowModalGuardar={setShowModalGuardar}
+        showModalGuardar={showModalGuardar}
+        cerrarModalGuardar={cerrarModalGuardar}
+        nombre={nombre}
+        precioCompra={precioCompra}
+        precioVenta={precioVenta}
+        codigoBarra={codigoBarra}
+        setPrecioVenta={setPrecioVenta}
+        setPrecioCompra={setPrecioCompra}
+      />
 
-      <Modal show={showModalEliminar} onHide={cerrarModalEliminar}>
-        <Modal.Header closeButton>
-          <Modal.Title>Eliminacion de producto !</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>¿Realmente desea eliminar el producto {nombre}?</Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={cerrarModalEliminar}>
-            Cancelar
-          </Button>
-          <Button
-            variant="danger"
-            onClick={() => eliminarProducto(codigoBarra)}
-          >
-            Eliminar
-          </Button>
-        </Modal.Footer>
-      </Modal>
+      <EliminarProducto
+        credencial={parametros.credencial}
+        setProductos={parametros.setProductos}
+        setNombre={setNombre}
+        setCodigoBarra={setCodigoBarra}
+        setShowModalEliminar={setShowModalEliminar}
+        showModalEliminar={showModalEliminar}
+        cerrarModalEliminar={cerrarModalEliminar}
+        nombre={nombre}
+        codigoBarra={codigoBarra}
+      />
     </>
   );
 };
