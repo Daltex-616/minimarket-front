@@ -97,7 +97,7 @@ const Navbar = (parametros) => {
           <div className="collapse navbar-collapse" id="navbarSupportedContent">
             <ul className="navbar-nav me-auto mb-2 mb-lg-0"></ul>
 
-            <h5 className="text-white bg-dark p-2">
+            <h5 className="text-white bg-dark p-2 mt-1">
               Hola {parametros.credencial.nombre} !
             </h5>
             <button

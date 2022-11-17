@@ -1,3 +1,6 @@
 .inputBuscar{
     width: 50%;
 }
+td,tr{
+    font-weight: 700;
+}
