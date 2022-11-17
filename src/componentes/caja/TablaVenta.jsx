@@ -25,7 +25,14 @@ const TablaVenta = (parametros) => {
   const calcularVuelto = () => {
     const pago = document.getElementById("pago").value;
     const total = document.getElementById("total").innerText;
-    document.getElementById("vuelto").innerText = +pago - +total;
+    vuelto = +pago - +total;
+    if (vuelto < 0) {
+      document.getElementById("vuelto").innerText = +pago - +total;
+      document.getElementById("vuelto").style.color = "RED";
+    } else {
+      document.getElementById("vuelto").innerText = +pago - +total;
+      document.getElementById("vuelto").style.color = "GREEN";
+    }
   };
 
   const eliminarProducto = async (index) => {
@@ -49,8 +56,8 @@ const TablaVenta = (parametros) => {
   };
 
   return (
-    <div className="container bg-light">
-      <div className="row align-items-center">
+    <div className="container bg-light position-realtive">
+      <div className="row">
         <div className="col-9">
           <table className="table bg-light table-hover">
             <thead>
@@ -84,8 +91,8 @@ const TablaVenta = (parametros) => {
             </tbody>
           </table>
         </div>
-        <div className="col-3">
-          <div className="row">
+        <div className="col-3 border border-left-0 border-top-0 bg-light ">
+        <div className="row">
             <div className="col">Total $</div>
             <div className="col">
               <p id="total">{total}</p>
@@ -132,8 +139,9 @@ const TablaVenta = (parametros) => {
             <Modal.Header closeButton>
               <Modal.Title>¿Desea cancelar toda la operacion?</Modal.Title>
             </Modal.Header>
-            <Modal.Body>
-              Advertencia: Se eliminaran todos los productos de la lista !
+            <Modal.Body className="bg-danger text-light font-weight-bold">
+             <h5> Advertencia:</h5>
+             <h5>Se eliminaran todos los productos de la lista !</h5>
             </Modal.Body>
             <Modal.Footer>
               <Button variant="danger" onClick={() => handleClosee()}>
