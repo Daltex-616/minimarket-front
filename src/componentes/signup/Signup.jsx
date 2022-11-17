@@ -192,28 +192,28 @@ const Signup = (parametros) => {
               Registrar Usuario
             </button>
           </a>
-          {/* Tabla Usuarios */}
+          {/* *******************Tabla Usuarios**************** */}
         </div>
-        <div className="table-responsive">
-          <table className="table table-sm table-bordered">
+        <div >
+          <table className="table table-sm table-bordered font-weight-bold">
             <thead>
               <tr>
-                <th>id</th>
-                <th>dni</th>
-                <th>nombre</th>
-                <th>apellido</th>
-                <th>acciones</th>
+                <th>ID</th>
+                <th>Dni</th>
+                <th>Nombre</th>
+                <th>Apellido</th>
+                <th>Acciones</th>
               </tr>
             </thead>
-            <tbody>
+            <tbody >
               {usuarios &&
                 usuarios.map((usuario) => (
                   <tr key={usuario.id}>
-                    <td>{usuario.id}</td>
-                    <td>{usuario.dni}</td>
-                    <td>{usuario.nombre}</td>
-                    <td>{usuario.apellido}</td>
-                    <td>
+                    <td className="font-weight-900">{usuario.id}</td>
+                    <td className="font-weight-900">{usuario.dni}</td>
+                    <td className="font-weight-900">{usuario.nombre}</td>
+                    <td className="font-weight-900">{usuario.apellido}</td>
+                    <td className="font-weight-900">
                       <a href="#registrar">
                         <button
                           onClick={() => modalUsuarios(usuario)}

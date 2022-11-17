@@ -14,8 +14,6 @@ const Home = (parametros) => {
             De la Puente a tu carrito
         </p>
       </div>
-      <section id="section">
-      </section>
     </>
   );
 };
