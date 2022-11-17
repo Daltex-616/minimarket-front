@@ -14,11 +14,11 @@ const Signup = (parametros) => {
   const [fecha_nacimiento, setFecha_nacimiento] = useState("");
   const [fecha_ingreso, setFecha_ingreso] = useState("");
   const [showModalUsuarioGuardar, setShowModalUsuarioGuardar] = useState(true);
-  const [showModalRol, setShowModalRol] = useState(true)
-  const [showResitro, setShowRegistro] =useState(true)
+  const [showModalRol, setShowModalRol] = useState(true);
+  const [showResitro, setShowRegistro] = useState(true);
 
   const modalUsuarios = (usuario) => {
-    setShowModalUsuarioGuardar(false);
+    setShowRegistro(false);
     setDni(usuario.dni);
     setName(usuario.nombre);
     setApellido(usuario.apellido);
@@ -26,42 +26,39 @@ const Signup = (parametros) => {
     setFecha_ingreso(usuario.fecha_ingreso);
   };
 
-  const modalRol = (usuario)=>{
-    setShowModalRol(false)
-    setDni(usuario.dni)
-  }
-  const  mostrarRegistrar = ()=>{
-    setShowRegistro(false)
-  }
-  const singnUpRol = async (dni,rol) =>{
-   let data = {
-    dni: document.getElementById("dni-rol").value,
-    rol: document.getElementById("rol").value
-  }
-  console.log(data)
-  await apiPost("rol", data)
-    data={
-      dni,
-      rol
-    }
-  setShowModalRol(true)
-  }
-  const guardarRol=async(
-    dni,rol
-  ) =>{
+  const modalRol = (usuario) => {
+    setShowModalRol(false);
+    setDni(usuario.dni);
+  };
+  const mostrarRegistrar = () => {
+    setShowRegistro(false);
+  };
+  const singnUpRol = async (dni, rol) => {
     let data = {
-      dni:document.getElementById("dni-rol").value,
-      rol:document.getElementById("rol").value
-    }
-    console.log(data)
-    await apiPut("rol", data)
-    data={
+      dni: document.getElementById("dni-rol").value,
+      rol: document.getElementById("rol").value,
+    };
+    console.log(data);
+    await apiPost("rol", data);
+    data = {
       dni,
-      rol
-    }
-  setShowModalRol(true)
-  }
-  
+      rol,
+    };
+    setShowModalRol(true);
+  };
+  const guardarRol = async (dni, rol) => {
+    let data = {
+      dni: document.getElementById("dni-rol").value,
+      rol: document.getElementById("rol").value,
+    };
+    console.log(data);
+    await apiPut("rol", data);
+    data = {
+      dni,
+      rol,
+    };
+    setShowModalRol(true);
+  };
 
   const guardarUsuario = async (
     dni,
@@ -95,7 +92,7 @@ const Signup = (parametros) => {
       };
     }
     setShowModalUsuarioGuardar(true);
-    setShowRegistro(true)
+    setShowRegistro(true);
     setDni("");
     setName("");
     setApellido("");
@@ -189,7 +186,14 @@ const Signup = (parametros) => {
             placeholder="buscar por Nombre, apellido o dni"
             onChange={handleChange}
           />
-          <button href="#registro" onClick={mostrarRegistrar} className="btn btn-success .position-absolute top-0 end-0 " >Registrar Usuario</button>
+          <a href="#registrar">
+            <button
+              onClick={mostrarRegistrar}
+              className="btn btn-success .position-absolute top-0 end-0 "
+            >
+              Registrar Usuario
+            </button>
+          </a>
         </div>
         <div className="table-responsive">
           <table className="table table-sm table-bordered">
@@ -211,22 +215,26 @@ const Signup = (parametros) => {
                     <td>{usuario.nombre}</td>
                     <td>{usuario.apellido}</td>
                     <td>
-                      <button
-                        onClick={() => modalUsuarios(usuario)}
-                        type="button"
-                        className="btn btn-warning m-1"
-                        title="Editar"
-                      >
-                        <i className="bi bi-pencil-square"></i>
-                      </button>
-                      <button
-                        onClick={() => modalRol(usuario) }
-                        type="button"
-                        className="btn btn-light m-1"
-                        title="Agregar rango"
-                      >
-                        <i className="bi bi-box-arrow-right"></i>
-                      </button>
+                      <a href="#registrar">
+                        <button
+                          onClick={() => modalUsuarios(usuario)}
+                          type="button"
+                          className="btn btn-warning m-1"
+                          title="Editar"
+                        >
+                          <i className="bi bi-pencil-square"></i>
+                        </button>
+                      </a>
+                      <a href="#roles">
+                        <button
+                          onClick={() => modalRol(usuario)}
+                          type="button"
+                          className="btn btn-light m-1"
+                          title="Agregar rango"
+                        >
+                          <i className="bi bi-box-arrow-right"></i>
+                        </button>
+                      </a>
                     </td>
                   </tr>
                 ))}
@@ -235,114 +243,132 @@ const Signup = (parametros) => {
         </div>
       </div>
 
-      {!showResitro &&<div className="col-sm-6 offset-sm-3 ">
-        <h1 id="registrar" className="titulo-reg">registrate</h1>
-        <h4>Numero de documento</h4>
-        <input
-          id="dni"
-          type="number"
-          value={dni}
-          onChange={(e) => setDni(e.target.value)}
-          className="form-control"
-          placeholder="D.N.I"
-        />
-        <br />
-        <h4>Nombre</h4>
-        <input
-          id="nombre"
-          type="text"
-          value={nombre}
-          onChange={(e) => setName(e.target.value)}
-          className="form-control"
-          placeholder="Nombre"
-        />
-        <br></br>
-        <h4>Apellido</h4>
-        <input
-          id="apellido"
-          type="text"
-          value={apellido}
-          onChange={(e) => setApellido(e.target.value)}
-          className="form-control"
-          placeholder="Apellido"
-        />
-        <br></br>
-        <h4>Fecha de nacimiento</h4>
-        <input
-          id="fecha_naci"
-          type="date"
-          value={fecha_nacimiento}
-          onChange={(e) => setFecha_nacimiento(e.target.value)}
-          className="form-control"
-          placeholder="Apellido"
-        />
-        <br></br>
-        <h4>Fecha de ingreso</h4>
-        <input
-          id="fecha_ingreso"
-          type="date"
-          value={fecha_ingreso}
-          onChange={(e) => setFecha_ingreso(e.target.value)}
-          className="form-control"
-          placeholder="Apellido"
-        />
-        <br></br>
-        
-        {showModalUsuarioGuardar && <h4>Contraseña</h4>}
-        {showModalUsuarioGuardar && (
+      {!showResitro && (
+        <div className="col-sm-6 offset-sm-3 ">
+          {showModalUsuarioGuardar && (
+            <h1 id="registrar" className="titulo-reg">
+              registrate
+            </h1>
+          )}
+          <h4>Numero de documento</h4>
           <input
-            type="password"
-            value={contraseña}
-            onChange={(e) => setContrasenia(e.target.value)}
+            id="dni"
+            type="number"
+            value={dni}
+            onChange={(e) => setDni(e.target.value)}
             className="form-control"
-            placeholder="Contraseña"
+            placeholder="D.N.I"
+          />
+          <br />
+          <h4>Nombre</h4>
+          <input
+            id="nombre"
+            type="text"
+            value={nombre}
+            onChange={(e) => setName(e.target.value)}
+            className="form-control"
+            placeholder="Nombre"
+          />
+          <br></br>
+          <h4>Apellido</h4>
+          <input
+            id="apellido"
+            type="text"
+            value={apellido}
+            onChange={(e) => setApellido(e.target.value)}
+            className="form-control"
+            placeholder="Apellido"
+          />
+          <br></br>
+          <h4>Fecha de nacimiento</h4>
+          <input
+            id="fecha_naci"
+            type="date"
+            value={fecha_nacimiento}
+            onChange={(e) => setFecha_nacimiento(e.target.value)}
+            className="form-control"
+            placeholder="Apellido"
+          />
+          <br></br>
+          <h4>Fecha de ingreso</h4>
+          <input
+            id="fecha_ingreso"
+            type="date"
+            value={fecha_ingreso}
+            onChange={(e) => setFecha_ingreso(e.target.value)}
+            className="form-control"
+            placeholder="Apellido"
+          />
+          <br></br>
+
+          {showModalUsuarioGuardar && <h4>Contraseña</h4>}
+          {showModalUsuarioGuardar && (
+            <input
+              type="password"
+              value={contraseña}
+              onChange={(e) => setContrasenia(e.target.value)}
+              className="form-control"
+              placeholder="Contraseña"
+            />
+          )}
+          <br />
+          {showModalUsuarioGuardar && (
+            <button className="btn btn-outline-success" onClick={signUp}>
+              registrar
+            </button>
+          )}
+          {!showModalUsuarioGuardar && (
+            <button
+              className="btn btn-outline-warning "
+              onClick={guardarUsuario}
+            >
+              Editar
+            </button>
+          )}
+
+          {/* formulario rol */}
+          <br></br>
+        </div>
+      )}
+      <div className="col-sm-6 offset-sm-3 ">
+        {!showModalRol && <h4 id="roles">Rol del usuario</h4>}
+
+        {!showModalRol && (
+          <select
+            id="rol"
+            className="form-select form-select-lg mb-3 "
+            aria-label=".form-select-lg example"
+          >
+            <option value={"DEFAULT"}>Abrir para seleccionar rol</option>
+            <option value={1}>Sistema</option>
+            <option value={2}>Cajero</option>
+            <option value={3}>Repositor</option>
+          </select>
+        )}
+        <br></br>
+        {!showModalRol && <h4>Numero de documento</h4>}
+        {!showModalRol && (
+          <input
+            id="dni-rol"
+            type="number"
+            value={dni}
+            onChange={(e) => setDni(e.target.value)}
+            className="form-control"
+            placeholder="D.N.I"
           />
         )}
         <br />
-        {showModalUsuarioGuardar && (
-          <button className="btn btn-outline-success" onClick={signUp}>
-            registrar
-          </button>
-        )}
-        {!showModalUsuarioGuardar && (
-          <button className="btn btn-outline-warning " onClick={guardarUsuario}>
-            Editar
-          </button>
-        )}
-
-        {/* formulario rol */}
-        {<h4>Rol del usuario</h4>}
-        
-        {!showModalRol &&<select  id="rol" className="form-select form-select-lg mb-3 " aria-label=".form-select-lg example">
-          <option value={"DEFAULT"}>Abrir para seleccionar rol</option>
-          <option value={1}>Sistema</option>
-          <option value={2}>Cajero</option>
-          <option value={3}>Repositor</option>
-          
-        </select>}
-        <br></br>
-        {!showModalRol &&<h4>Numero de documento</h4>}
-        {!showModalRol &&<input
-          id="dni-rol"
-          type="number"
-          value={dni}
-          onChange={(e) => setDni(e.target.value)}
-          className="form-control"
-          placeholder="D.N.I"
-        />}
-        <br />
-        {!showModalRol &&(
+        {!showModalRol && (
           <button className="btn btn-outline-warning " onClick={singnUpRol}>
             Agregar rol
           </button>
         )}
-        {!showModalRol &&(
+        {!showModalRol && (
           <button className="btn btn-outline-warning " onClick={guardarRol}>
             Editar rol
           </button>
         )}
-        <br></br>
-      </div>}
+      </div>
     </>
   );
 };
