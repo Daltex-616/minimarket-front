@@ -16,8 +16,12 @@ const Signup = (parametros) => {
   const [showModalUsuarioGuardar, setShowModalUsuarioGuardar] = useState(true);
   const [showModalRol, setShowModalRol] = useState(true);
   const [showResitro, setShowRegistro] = useState(true);
-
+  const [edit, setEdit] = useState(true);
+  const [registro, setRegistro] = useState(true);
+  // ***************** mostrar/ ocultar componentes ****************************
   const modalUsuarios = (usuario) => {
+    setRegistro(false);
+    setEdit(false);
     setShowRegistro(false);
     setDni(usuario.dni);
     setName(usuario.nombre);
@@ -25,41 +29,20 @@ const Signup = (parametros) => {
     setFecha_nacimiento(usuario.fecha_nacimiento);
     setFecha_ingreso(usuario.fecha_ingreso);
   };
-
   const modalRol = (usuario) => {
     setShowModalRol(false);
     setDni(usuario.dni);
   };
   const mostrarRegistrar = () => {
     setShowRegistro(false);
+    setRegistro(true);
+    setEdit(true);
   };
-  const singnUpRol = async (dni, rol) => {
-    let data = {
-      dni: document.getElementById("dni-rol").value,
-      rol: document.getElementById("rol").value,
-    };
-    console.log(data);
-    await apiPost("rol", data);
-    data = {
-      dni,
-      rol,
-    };
+  const cancelarReg = () => {
+    setShowRegistro(true);
     setShowModalRol(true);
   };
-  const guardarRol = async (dni, rol) => {
-    let data = {
-      dni: document.getElementById("dni-rol").value,
-      rol: document.getElementById("rol").value,
-    };
-    console.log(data);
-    await apiPut("rol", data);
-    data = {
-      dni,
-      rol,
-    };
-    setShowModalRol(true);
-  };
-
+  // ********************************** editar usuario *******************************
   const guardarUsuario = async (
     dni,
     nombre,
@@ -101,7 +84,7 @@ const Signup = (parametros) => {
     setContrasenia("");
     alert("cuenta editada con exito");
   };
-
+  // ********************* api fetch ******************
   React.useEffect(() => {
     const users = async () => {
       const resultados = await apiGet("usuarios", parametros.credencial.token);
@@ -115,7 +98,7 @@ const Signup = (parametros) => {
     setBusqueda(e.target.value);
     filtrar(e.target.value);
   };
-
+  // ******************* buscar usuario ********************
   const filtrar = (terminoBusqueda) => {
     var resultadosBusqueda = tablaUsuarios.filter((elemento) => {
       if (
@@ -135,8 +118,8 @@ const Signup = (parametros) => {
     });
     setUsuarios(resultadosBusqueda);
   };
-
-  async function signUp() {
+  // **********************crear usuairo ************************
+  const signUp = async () => {
     let data = {
       dni: +dni,
       nombre,
@@ -171,17 +154,32 @@ const Signup = (parametros) => {
     } else {
       alert("Faltan datos");
     }
-  }
+  };
   if (!parametros.signup) {
     return <></>;
   }
+  // **************** crear rol ******************
+  const singnUpRol = async (dni, rol) => {
+    let data = {
+      dni: document.getElementById("dni-rol").value,
+      rol: document.getElementById("rol").value,
+    };
+    console.log(data);
+    await apiPost("rol", data);
+    data = {
+      dni,
+      rol,
+    };
+    setShowModalRol(true);
+  };
 
   return (
     <>
+      {/* filtro y boton de despliege de resistro */}
       <div>
         <div className="containerInput">
           <input
-            className="form-control inputBuscar d-inline"
+            className="form-control inputBuscar d-inline m-4"
             value={busqueda}
             placeholder="buscar por Nombre, apellido o dni"
             onChange={handleChange}
@@ -194,6 +192,7 @@ const Signup = (parametros) => {
               Registrar Usuario
             </button>
           </a>
+          {/* Tabla Usuarios */}
         </div>
         <div className="table-responsive">
           <table className="table table-sm table-bordered">
@@ -242,12 +241,12 @@ const Signup = (parametros) => {
           </table>
         </div>
       </div>
-
+      {/* *****************Registrar usuarios************************ */}
       {!showResitro && (
         <div className="col-sm-6 offset-sm-3 ">
           {showModalUsuarioGuardar && (
             <h1 id="registrar" className="titulo-reg">
-              registrate
+              Usuarios
             </h1>
           )}
           <h4>Numero de documento</h4>
@@ -313,11 +312,27 @@ const Signup = (parametros) => {
           )}
           <br />
           {showModalUsuarioGuardar && (
+            <button
+              onClick={cancelarReg}
+              className="btn btn-outline-secondary me-4"
+            >
+              Cancelar
+            </button>
+          )}
+          {registro && (
             <button className="btn btn-outline-success" onClick={signUp}>
               registrar
             </button>
           )}
           {!showModalUsuarioGuardar && (
+            <button
+              onClick={cancelarReg}
+              className="btn btn-outline-secondary me-4"
+            >
+              Cancelar
+            </button>
+          )}
+          {!edit && (
             <button
               className="btn btn-outline-warning "
               onClick={guardarUsuario}
@@ -325,8 +340,7 @@ const Signup = (parametros) => {
               Editar
             </button>
           )}
-
-          {/* formulario rol */}
+          {/* *********************formulario rol************************ */}
           <br></br>
         </div>
       )}
@@ -359,18 +373,20 @@ const Signup = (parametros) => {
         )}
         <br />
         {!showModalRol && (
-          <button className="btn btn-outline-warning " onClick={singnUpRol}>
-            Agregar rol
+          <button
+            onClick={cancelarReg}
+            className="btn btn-outline-secondary me-4"
+          >
+            Cancelar
           </button>
         )}
         {!showModalRol && (
-          <button className="btn btn-outline-warning " onClick={guardarRol}>
-            Editar rol
+          <button className="btn btn-outline-warning " onClick={singnUpRol}>
+            Agregar rol
           </button>
         )}
       </div>
     </>
   );
 };
-
 export { Signup };
