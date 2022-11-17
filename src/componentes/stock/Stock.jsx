@@ -1,10 +1,8 @@
 import { TablaProductos } from "./tabla/TablaProductos";
+import { AgregarProducto } from "./productos/AgregarProducto";
 import { useState } from "react";
 import React from "react";
-import Button from "react-bootstrap/Button";
-import Modal from "react-bootstrap/Modal";
-import Form from "react-bootstrap/Form";
-import { apiGet, apiPost } from "../../utils/api.js";
+import { apiGet } from "../../utils/api.js";
 
 const Stock = (parametros) => {
   const [productos, setProductos] = useState([]);
@@ -24,47 +22,21 @@ const Stock = (parametros) => {
   }
 
   const productosFiltrados = productos.filter((producto) => {
-    return producto.codigo_barra.includes(filtro) || producto.nombre.toLowerCase().includes(filtro.toLowerCase()); 
+    return (
+      producto.codigo_barra.includes(filtro) ||
+      producto.nombre.toLowerCase().includes(filtro.toLowerCase())
+    );
   });
 
   const nuevo = (event) => {
-    setFiltro(event.target.value);
+    setFiltro(event.target.value.trim());
   };
 
   const cerrarModalAgregar = () => setShowModalAgregar(false);
   const mostrarModalAgregar = () => {
     setShowModalAgregar(true);
   };
-  const agregarProducto = async (
-    nombre,
-    codigo_barra,
-    precio_compra,
-    precio_venta
-  ) => {
-    if (nombre === "" || codigo_barra === "") {
-      return;
-    }
-    let data = {
-      nombre,
-      codigo_barra,
-      precio_venta: +precio_venta,
-      precio_compra: +precio_compra,
-    };
-    await apiPost("productos", data);
-    data = {
-      nombre,
-      codigo_barra,
-      precio_venta: +precio_venta,
-      precio_compra: +precio_compra,
-      total: 0,
-      salon: 0,
-      deposito: 0,
-    };
-    const productos2 = productos;
-    productos2.push(data);
-    setProductos(productos2);
-    setShowModalAgregar(false);
-  };
+
   return (
     <>
       <div className="container">
@@ -95,53 +67,13 @@ const Stock = (parametros) => {
           credencial={parametros.credencial}
         />
 
-        <Modal show={showModalAgregar} onHide={cerrarModalAgregar}>
-          <Modal.Header closeButton>
-            <Modal.Title>Agregar producto !</Modal.Title>
-          </Modal.Header>
-          <Modal.Body>
-            <Form>
-              <Form.Group className="mb-3">
-                <Form.Label>Nombre</Form.Label>
-                <Form.Control type="text" id="nombre" />
-              </Form.Group>
-              <Form.Group className="mb-3">
-                <Form.Label>Codigo de barra</Form.Label>
-                <Form.Control type="text" id="codigo_barra" />
-              </Form.Group>
-              <Form.Group className="mb-3">
-                <Form.Label>Precio de compra</Form.Label>
-                <Form.Control type="number" id="precio_compra" />
-              </Form.Group>
-              <Form.Group className="mb-3">
-                <Form.Label>Precio de venta</Form.Label>
-                <Form.Control type="number" id="precio_venta" />
-              </Form.Group>
-            </Form>
-          </Modal.Body>
-          <Modal.Footer>
-            <Button variant="secondary" onClick={cerrarModalAgregar}>
-              Cancelar
-            </Button>
-            <Button
-              variant="success"
-              onClick={() =>
-                agregarProducto(
-                  document.getElementById("nombre").value,
-                  document.getElementById("codigo_barra").value,
-                  document
-                    .getElementById("precio_compra")
-                    .value.replace(",", "."),
-                  document
-                    .getElementById("precio_venta")
-                    .value.replace(",", ".")
-                )
-              }
-            >
-              Agregar
-            </Button>
-          </Modal.Footer>
-        </Modal>
+        <AgregarProducto
+          credencial={parametros.credencial}
+          setProductos={setProductos}
+          setShowModalAgregar={setShowModalAgregar}
+          cerrarModalAgregar={cerrarModalAgregar}
+          showModalAgregar={showModalAgregar}
+        />
       </div>
     </>
   );

@@ -7,8 +7,7 @@ import { Caja } from "./componentes/caja/Caja";
 import { Stock } from "./componentes/stock/Stock";
 import { Bloqueado } from "./componentes/bloqueado/Bloqueado";
 import { apiGet } from "./utils/api.js";
-import {Signup} from "./componentes/signup/Signup"
-
+import { Signup } from "./componentes/signup/Signup";
 
 function App() {
   const [credencial, setCredencial] = useState(null);
@@ -17,8 +16,7 @@ function App() {
   const [stock, setStock] = useState(false);
   const [bloqueado, setBloqueado] = useState(false);
   const [formAgregarProducto, setFormAgregarProducto] = useState(false);
-  const [signup, setSignup] = useState(false)
- 
+  const [signup, setSignup] = useState(false);
 
   useEffect(() => {
     const logeado = async () => {
@@ -57,45 +55,36 @@ function App() {
           setFormAgregarProducto={setFormAgregarProducto}
           signup={signup}
           setSignup={setSignup}
-         
-         
-          
         />
-        
+
         {!stock && !caja && !signup ? <Home home={home} /> : null}
         {!stock && !home && !signup ? <Caja caja={caja} /> : null}
-        {!home && !caja && !signup ? <Stock
-          stock={stock}
-          setStock={setStock}
-          credencial={credencial}
-          formAgregarProducto={formAgregarProducto}
-          setFormAgregarProducto={setFormAgregarProducto}
-        /> : null}
-        {!stock && !caja && !home ? <Signup 
-        signup={signup}
-        setSignup={setSignup}
-        credencial={credencial}/> : null}
-        
+        {!home && !caja && !signup ? (
+          <Stock
+            stock={stock}
+            setStock={setStock}
+            credencial={credencial}
+            formAgregarProducto={formAgregarProducto}
+            setFormAgregarProducto={setFormAgregarProducto}
+          />
+        ) : null}
+        {!stock && !caja && !home ? (
+          <Signup
+            signup={signup}
+            setSignup={setSignup}
+            credencial={credencial}
+          />
+        ) : null}
+
         <Bloqueado bloqueado={bloqueado} />
-       
-       
       </>
     );
   }
-  return(
-  <>
-        <Login credencial={credencial} setCredencial={setCredencial} 
-        
-        
-        
-        />
-    
-        
-
-  </>
-  )
-  
-  
+  return (
+    <>
+      <Login credencial={credencial} setCredencial={setCredencial} />
+    </>
+  );
 }
 
 export default App;

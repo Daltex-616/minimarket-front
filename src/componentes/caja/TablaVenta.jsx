@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 
+
 const TablaVenta = (parametros) => {
   const [show, setShow] = useState(false);
 
@@ -91,34 +92,24 @@ const TablaVenta = (parametros) => {
           </table>
         </div>
         <div className="col-3 border border-left-0 border-top-0 bg-light ">
-          <div className="row ">
+        <div className="row">
+            <div className="col">Total $</div>
             <div className="col">
-              <h1>Total $</h1>
-            </div>
-            <div className="col">
-              <h1 id="total">{total.toFixed(2)}</h1>
+              <p id="total">{total}</p>
             </div>
           </div>
-          <div className="input-group mb-3">
-            <div className="input-group-prepend">
-              <span className="input-group-text">$</span>
-            </div>
-            <input
-              className="form-control"
-              min={0}
-              placeholder="¿Con cuanto abona?"
-              type="number"
-              id="pago"
-              onChange={() => calcularVuelto()}
-            />
-          </div>
-
+          <input
+            placeholder="con cuanto abona?"
+            type="number"
+            id="pago"
+            onChange={() => calcularVuelto()}
+          />
+          <br />
+          <br />
           <div className="row">
+            <div className="col">Vuelto $</div>
             <div className="col">
-              <h4> Vuelto $ </h4>
-            </div>
-            <div className="col">
-              <h4 id="vuelto">{vuelto.toFixed(2)}</h4>
+              <p id="vuelto">{vuelto}</p>
             </div>
           </div>
           <Button variant="success m-2" onClick={() => handleShow()}>
@@ -129,16 +120,15 @@ const TablaVenta = (parametros) => {
             <Modal.Header closeButton>
               <Modal.Title>¿Desea procesar la operacion?</Modal.Title>
             </Modal.Header>
-            <Modal.Body className="font-weight-bold">
-             <h5> El valor total es de ${total}</h5>
-             <h5> Y el cambio a dar es ${vuelto}</h5>
+            <Modal.Body>
+              El valor total es ${total} y el cambio a dar es ${vuelto}
             </Modal.Body>
             <Modal.Footer>
               <Button variant="danger" onClick={() => handleClose()}>
-                Cancelar
+                No
               </Button>
               <Button variant="success" onClick={() => procesarVenta()}>
-                Proceder
+                Si
               </Button>
             </Modal.Footer>
           </Modal>
@@ -155,10 +145,10 @@ const TablaVenta = (parametros) => {
             </Modal.Body>
             <Modal.Footer>
               <Button variant="danger" onClick={() => handleClosee()}>
-                Cancelar
+                No
               </Button>
               <Button variant="success" onClick={() => cancelarVenta()}>
-                Proceder
+                Si
               </Button>
             </Modal.Footer>
           </Modal>
