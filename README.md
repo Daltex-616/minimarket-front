@@ -1,3 +1,11 @@
+# minimarket-front
+
+Integrantes:
+- Zamora Federico
+- Arnaudo Facundo
+- Baldissone Marco
+
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
